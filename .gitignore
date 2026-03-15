@@ -1,0 +1,20 @@
+# Environment secrets
+.env
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# OS files
+.DS_Store
+
+# Keys (important)
+keys/

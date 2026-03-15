@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ============================= */
+/* Global                        */
+/* ============================= */
+
+body {
+  @apply bg-slate-950 text-slate-200;
+}
+
+
+/* ============================= */
+/* Architecture Pipeline Styles  */
+/* ============================= */
+
+.pipeline-box {
+  padding: 16px 32px;
+  border-width: 2px;
+  border-radius: 12px;
+  background: #020617;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.pipeline-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(59,130,246,0.25);
+}
+
+.arrow {
+  color: #64748b;
+  font-size: 24px;
+}
+
+
+/* ============================= */
+/* Dashboard Panels              */
+/* ============================= */
+
+.panel {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s ease;
+}
+
+.panel:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 10px 30px rgba(59,130,246,0.25);
+}
+
+
+/* ============================= */
+/* Skill Cards                   */
+/* ============================= */
+
+.skill-card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-6px);
+  border-color: #3b82f6;
+  box-shadow: 0 10px 30px rgba(59,130,246,0.25);
+}
+
+.skill-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #60a5fa;
+}
+
+.skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #94a3b8;
+}
+
+
+/* ============================= */
+/* Project Cards                 */
+/* ============================= */
+
+.project-card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: #3b82f6;
+  box-shadow: 0 10px 30px rgba(59,130,246,0.25);
+}
+
+
+/* ============================= */
+/* Buttons                       */
+/* ============================= */
+
+.btn-primary {
+  background: #2563eb;
+  padding: 12px 24px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.btn-outline {
+  border: 1px solid #334155;
+  padding: 12px 24px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+}
+
+.btn-outline:hover {
+  background: #1e293b;
+}
