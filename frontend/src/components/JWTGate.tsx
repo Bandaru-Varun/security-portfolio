@@ -1,11 +1,10 @@
 import { useState } from "react"
 import AuthConsole from "./AuthConsole"
-import JWTDecoder from "./JWTDecoder"
+import JWTDecoder from "./JwtDecoder"
 import Portfolio from "./Portfolio"
 import SecurityBoot from "./SecurityBoot"
 
 export default function JWTGate() {
-
   const [token, setToken] = useState("")
   const [authenticated, setAuthenticated] = useState(false)
   const [booting, setBooting] = useState(false)
@@ -13,7 +12,6 @@ export default function JWTGate() {
 
   const verify = () => {
     try {
-
       const parts = token.split(".")
 
       if (parts.length !== 3) {
@@ -30,7 +28,6 @@ export default function JWTGate() {
       setBooting(true)
       setError("")
 
-      // After boot animation (~4 seconds) load portfolio
       setTimeout(() => {
         setAuthenticated(true)
         setBooting(false)
@@ -41,19 +38,13 @@ export default function JWTGate() {
     }
   }
 
-  if (booting) {
-    return <SecurityBoot />
-  }
-
-  if (authenticated) {
-    return <Portfolio />
-  }
+  if (booting) return <SecurityBoot />
+  if (authenticated) return <Portfolio />
 
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center gap-12">
 
       <AuthConsole />
-
       <JWTDecoder />
 
       <div className="text-center">
