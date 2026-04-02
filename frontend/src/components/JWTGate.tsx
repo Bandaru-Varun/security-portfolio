@@ -4,37 +4,55 @@ import JWTDecoder from "./JwtDecoder"
 import Portfolio from "./Portfolio"
 import SecurityBoot from "./SecurityBoot"
 
+const API_URL = "https://security-portfolio-q5sf.onrender.com"
+
 export default function JWTGate() {
-  const [token, setToken] = useState("")
   const [authenticated, setAuthenticated] = useState(false)
   const [booting, setBooting] = useState(false)
   const [error, setError] = useState("")
 
-  const verify = () => {
+  const verify = async () => {
     try {
-      const parts = token.split(".")
+      setError("")
 
-      if (parts.length !== 3) {
+      const res = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "test@example.com",   // TEMP (replace later)
+          password: "password123"
+        }),
+      })
+
+      if (!res.ok) {
         throw new Error()
       }
 
-      const payload = JSON.parse(atob(parts[1]))
-      const now = Math.floor(Date.now() / 1000)
+      const data = await res.json()
+      const accessToken = data.access_token
 
-      if (payload.exp < now) {
+      // Test protected route (real security check)
+      const protectedRes = await fetch(`${API_URL}/protected`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+
+      if (!protectedRes.ok) {
         throw new Error()
       }
 
       setBooting(true)
-      setError("")
 
       setTimeout(() => {
         setAuthenticated(true)
         setBooting(false)
-      }, 4200)
+      }, 2000)
 
     } catch {
-      setError("Access Denied — Invalid Token")
+      setError("Access Denied — Backend Auth Failed")
     }
   }
 
@@ -52,16 +70,6 @@ export default function JWTGate() {
         <h1 className="text-3xl font-bold mb-4">
           Secure Portfolio Gateway
         </h1>
-
-        <textarea
-          rows={3}
-          className="bg-slate-900 border border-slate-700 rounded-xl p-4 w-96 mb-4"
-          placeholder="Paste Access Token"
-          value={token}
-          onChange={(e) => setToken(e.target.value)}
-        />
-
-        <br />
 
         <button
           onClick={verify}
