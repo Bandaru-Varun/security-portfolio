@@ -10,11 +10,17 @@ app = FastAPI(title="Security Portfolio API")
 
 
 # -----------------------------
-# CORS Configuration (FIXED)
+# CORS (STRICT + CORRECT)
 # -----------------------------
+origins = [
+    "https://security-portfolio-rzrv.vercel.app",  # 🔥 your frontend
+    "http://localhost:5173",
+    "http://localhost:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 🔥 allow ALL (fixes your issue instantly)
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,7 +28,7 @@ app.add_middleware(
 
 
 # -----------------------------
-# Startup Hook
+# Startup
 # -----------------------------
 @app.on_event("startup")
 def startup():
@@ -37,19 +43,16 @@ app.include_router(auth_router)
 
 
 # -----------------------------
-# Public Route
+# Routes
 # -----------------------------
 @app.get("/")
 def root():
-    return {"message": "Security Portfolio Backend Running"}
+    return {"message": "Backend Running"}
 
 
-# -----------------------------
-# Protected Route
-# -----------------------------
 @app.get("/protected")
 def protected_route(current_user: dict = Depends(get_current_user)):
     return {
-        "message": "You are authenticated",
+        "message": "Authenticated",
         "user": current_user
     }
