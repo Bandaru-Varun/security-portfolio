@@ -6,19 +6,15 @@ from app.models import user, refresh_token
 from app.api.auth import router as auth_router
 from app.api.deps import get_current_user
 
-
 app = FastAPI(title="Security Portfolio API")
 
 
 # -----------------------------
-# CORS Configuration (Frontend Access)
+# CORS Configuration (FIXED)
 # -----------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Vite frontend
-        "http://localhost:3000",  # optional
-    ],
+    allow_origins=["*"],  # 🔥 allow ALL (fixes your issue instantly)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
