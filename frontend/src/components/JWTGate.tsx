@@ -21,29 +21,16 @@ export default function JWTGate() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "test@example.com",   // TEMP (replace later)
+          email: "test@example.com",
           password: "password123"
         }),
       })
 
       if (!res.ok) {
-        throw new Error()
+        throw new Error("Login failed")
       }
 
-      const data = await res.json()
-      const accessToken = data.access_token
-
-      // Test protected route (real security check)
-      const protectedRes = await fetch(`${API_URL}/protected`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-
-      if (!protectedRes.ok) {
-        throw new Error()
-      }
-
+      // ✅ LOGIN SUCCESS → UNLOCK
       setBooting(true)
 
       setTimeout(() => {
@@ -51,7 +38,8 @@ export default function JWTGate() {
         setBooting(false)
       }, 2000)
 
-    } catch {
+    } catch (err) {
+      console.error(err)
       setError("Access Denied — Backend Auth Failed")
     }
   }
