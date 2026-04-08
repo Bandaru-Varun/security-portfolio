@@ -6,45 +6,29 @@ from app.models import user, refresh_token
 from app.api.auth import router as auth_router
 from app.api.deps import get_current_user
 
+
 app = FastAPI(title="Security Portfolio API")
 
 
-# -----------------------------
-# CORS (STRICT + CORRECT)
-# -----------------------------
-origins = [
-    "https://security-portfolio-rzrv.vercel.app",  # 🔥 your frontend
-    "http://localhost:5173",
-    "http://localhost:3000",
-]
-
+# 🔥 CRITICAL: ADD THIS IMMEDIATELY AFTER APP CREATION
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],  # TEMP: allow everything
+    allow_credentials=False,  # IMPORTANT: must be False when using "*"
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-# -----------------------------
-# Startup
-# -----------------------------
 @app.on_event("startup")
 def startup():
     wait_for_db()
     Base.metadata.create_all(bind=engine)
 
 
-# -----------------------------
-# Routers
-# -----------------------------
 app.include_router(auth_router)
 
 
-# -----------------------------
-# Routes
-# -----------------------------
 @app.get("/")
 def root():
     return {"message": "Backend Running"}
